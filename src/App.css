@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding: 10px;
 }
 
 .App-logo {
@@ -19,4 +20,39 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.time {
+  font-family: sans-serif;
+  font-size: 2rem;
+  color: #555555;
+}
+
+button {
+  border-radius: 2px;
+  border: 1px solid #555555;
+  font-family: sans-serif;
+  font-size: .75rem;
+  margin: 4px;
+  color: white;
+  width: 50px;
+}
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button.start {
+  background-color: #007700;
+}
+
+button.stop {
+  background-color: #770000;
+}
+
+button.reset {
+  background-color: #444444;
+}
+button.reset:disabled {
+  border-color: #aaaaaa;
+  background-color: #dddddd;
 }
