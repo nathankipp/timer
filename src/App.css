@@ -52,7 +52,7 @@ button.stop {
 button.reset {
   background-color: #444444;
 }
-button.reset:disabled {
+button:disabled {
   border-color: #aaaaaa;
   background-color: #dddddd;
 }
