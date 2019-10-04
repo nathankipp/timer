@@ -5,11 +5,13 @@ import {
   setItem,
   removeItem,
 } from './storage';
+import keyGen from './keyGen';
 
 export {
   computeMillis,
-  getItem,
   getTime,
-  removeItem,
+  getItem,
   setItem,
+  removeItem,
+  keyGen,
 };

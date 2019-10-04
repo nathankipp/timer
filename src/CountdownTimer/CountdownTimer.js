@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
+  keyGen,
   computeMillis,
   getTime,
   getItem,
@@ -20,9 +21,7 @@ const CountdownTimer = ({
   onComplete,
   storageKey,
 }) => {
-  const STORAGE_KEY =  storageKey;
-  const STARTED_KEY = `${STORAGE_KEY}.started`;
-  const RUNNING_KEY = `${STORAGE_KEY}.running`;
+  const { STORAGE_KEY, STARTED_KEY, RUNNING_KEY } = keyGen(storageKey);
 
   const isRunning = !!getItem(RUNNING_KEY);
   const [running, setRunning] = useState(isRunning);
@@ -45,13 +44,13 @@ const CountdownTimer = ({
   let timer = useRef();
 
   const start = () => {
-    const elapsed = initialTime - (Number(sessionTime) || initialTime);
-    const startedAt = nowish() - elapsed;
+    timer.current = setInterval(() => setTime(t => t - INTERVAL), INTERVAL);
     if (!started) {
+      const elapsed = initialTime - (Number(sessionTime) || initialTime);
+      const startedAt = nowish() - elapsed;
       setStarted(startedAt);
       setItem(STARTED_KEY, startedAt);
     }
-    timer.current = setInterval(() => setTime(t => t - INTERVAL), INTERVAL);
     setRunning(true);
     setItem(RUNNING_KEY, true);
   };
@@ -59,16 +58,12 @@ const CountdownTimer = ({
   const stop = () => {
     clearInterval(timer.current);
     setRunning(false);
-    removeItem(RUNNING_KEY);
-    setStarted(null);
-    removeItem(STARTED_KEY);
+    setStarted(0);
+    [RUNNING_KEY, STARTED_KEY].forEach(removeItem);
   };
 
   const reset = () => {
     setTime(initialTime);
-    removeItem(RUNNING_KEY);
-    removeItem(STARTED_KEY);
-    removeItem(STORAGE_KEY);
   }
 
   useEffect(() => {
