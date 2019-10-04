@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { computeMillis, getTime } from '../lib';
+import {
+  computeMillis,
+  getTime,
+  getItem,
+  setItem,
+  removeItem,
+} from '../lib';
 import Controls from '../Controls';
 
 const INTERVAL = 100;
-const getItem = key => window.sessionStorage.getItem(key);
-const setItem = (key, value) => window.sessionStorage.setItem(key, value);
-const removeItem = key => window.sessionStorage.removeItem(key);
 
 const Timer = ({ id, countdown, stopwatch, autoStart }) => {
   const STORAGE_KEY =  id;
