@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Timer from '../Timer';
 
-const CountdownTimer = props => (
-  <Timer direction={-1} {...props} />
+const StopWatch = props => (
+  <Timer direction={1} from="0:00" {...props} />
 )
 
-CountdownTimer.propTypes = {
+StopWatch.propTypes = {
   autoStart: PropTypes.bool,
   controls: PropTypes.bool,
-  from: PropTypes.string.isRequired,
+  limit: PropTypes.string,
   onComplete: PropTypes.func,
   storageKey: PropTypes.string.isRequired,
 }
 
-CountdownTimer.defaultProps = {
+StopWatch.defaultProps = {
   autoStart: false,
   controls: true,
+  limit: undefined,
   onComplete: undefined,
 }
 
-export default CountdownTimer;
+export default StopWatch;

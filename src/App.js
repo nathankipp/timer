@@ -1,34 +1,20 @@
 import React from 'react';
 import './App.css';
-// import Timer from './Timer';
 import CountdownTimer from './CountdownTimer';
+import StopWatch from './StopWatch';
 
 const App = () => (
   <div className="App">
     <CountdownTimer
-      from="0:20.0"
-      onComplete={() => alert('done')}
+      from="0:04.1"
       storageKey="my-timer"
+    />
+    <hr />
+    <StopWatch
+      limit="0:05.1"
+      storageKey="my-stopwatch"
     />
   </div>
 );
 
 export default App;
-
-// <Timer
-//   id="timer"
-//   countdown="0:00.9"
-// />
-// <hr />
-// <Timer
-//   id="timer-autoStart"
-//   countdown="0:01.9"
-//   autoStart
-// />
-// <hr />
-// <Timer
-//   id="stopwatch"
-//   stopwatch
-//   autoStart
-// />
-// <hr />
