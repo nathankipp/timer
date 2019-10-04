@@ -11,6 +11,7 @@ import Controls from '../Controls';
 
 const INTERVAL = 100;
 const round = ms => Math.round(ms/INTERVAL) * INTERVAL;
+const nowish = () => round(Date.now());
 
 const CountdownTimer = ({
   autoStart,
@@ -26,15 +27,15 @@ const CountdownTimer = ({
   const isRunning = !!getItem(RUNNING_KEY);
   const [running, setRunning] = useState(isRunning);
 
-  const sessionStarted = getItem(STARTED_KEY);
-  const [started, setStarted] = useState(Number(sessionStarted));
+  const sessionStarted = Number(getItem(STARTED_KEY));
+  const [started, setStarted] = useState(sessionStarted);
 
   const initialTime = computeMillis(from);
   const sessionTime = getItem(STORAGE_KEY);
   let defaultTime;
   if (sessionTime) {
-    defaultTime = sessionStarted
-      ? initialTime - (round(Date.now()) - Number(sessionStarted))
+    defaultTime = started
+      ? initialTime - (nowish() - started)
       : Number(sessionTime);
   } else {
     defaultTime = initialTime;
@@ -45,7 +46,7 @@ const CountdownTimer = ({
 
   const start = () => {
     const elapsed = initialTime - (Number(sessionTime) || initialTime);
-    const startedAt = round(Date.now()) - elapsed;
+    const startedAt = nowish() - elapsed;
     if (!started) {
       setStarted(startedAt);
       setItem(STARTED_KEY, startedAt);
@@ -71,7 +72,7 @@ const CountdownTimer = ({
   }
 
   useEffect(() => {
-    if (isRunning || autoStart) {
+    if (running || autoStart) {
       start();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -88,7 +89,7 @@ const CountdownTimer = ({
 
   const disabled = {
     start: time <= 0,
-    reset: !!isRunning || time === initialTime,
+    reset: running || time === initialTime,
   };
 
   return (
